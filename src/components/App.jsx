@@ -1,64 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ToDoItem from "./ToDoItem";
 import InputArea from "./InputArea";
 
-
 function App() {
-
   const [inputText, setInputText] = useState("");
-  const [items, setItems] = useState([]);
+
+  // ✅ Load from localStorage on app start
+  const [items, setItems] = useState(() => {
+    const saved = localStorage.getItem("todos");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // ✅ Save to localStorage only when `items` change
+  useEffect(() => {
+    console.log("💾 Saving to LocalStorage:", items);
+    if (items.length > 0) {
+      localStorage.setItem("todos", JSON.stringify(items));
+    }
+  }, [items]);
 
   function handleChange(event) {
-    const newValue = event.target.value;
-    setInputText(newValue);
+    setInputText(event.target.value);
   }
 
   function addItem() {
-    if (inputText.trim() !== "") {   //prevent adding empty items
-      setItems((prevItems) => {
-        return [...prevItems, inputText];
-      })
-      setInputText("");              //clear input fields
+    if (inputText.trim() !== "") {
+      setItems((prevItems) => [...prevItems, inputText]);
+      setInputText("");
     }
   }
 
-
   function deleteItem(id) {
-    setItems(prevItems => {
-      return prevItems.filter((item, index) => {
-        return index !== id;
-      });
-    });
+    setItems((prevItems) => prevItems.filter((_, index) => index !== id));
   }
 
   function refreshList() {
-    setItems([]);
+    if (window.confirm("Are you sure you want to clear the list?")) {
+      setItems([]);  // ✅ Clears UI but does not delete storage
+      localStorage.removeItem("todos");
+    }
   }
-
 
   return (
     <div className="container">
-
       <div className="heading">
         <h1 onClick={refreshList} style={{ cursor: "pointer" }}>To-Do List</h1>
       </div>
 
-      <InputArea
-        inputText={inputText}
-        handleChange={handleChange}
-        addItem={addItem}
-      />
+      <InputArea inputText={inputText} handleChange={handleChange} addItem={addItem} />
 
       <div>
         <ul>
-          {items.map((todoItem, index) =>
-            <ToDoItem
-              key={index}
-              id={index}
-              text={todoItem}
-              onChecked={deleteItem}
-            />
-          )}
+          {items.map((todoItem, index) => (
+            <ToDoItem key={index} id={index} text={todoItem} onChecked={deleteItem} />
+          ))}
         </ul>
       </div>
     </div>
