@@ -3,15 +3,16 @@ import React from "react";
 
 function ToDoItem(props) {
     return (
-        <li>
-            <button
+        <div>
+            <li
                 onClick={() => {
                     props.onChecked(props.id);
                 }}
+                style={{ cursor: "pointer" }}
             >
                 {props.text} ❌
-            </button>
-        </li>
+            </li>
+        </div>
     );
 }
 

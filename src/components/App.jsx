@@ -26,7 +26,7 @@ function App() {
   function addItem() {
     if (inputText.trim() !== "") {
       setItems((prevItems) => [...prevItems, inputText]);
-      setInputText("");
+      setInputText(""); // Clear the input text after adding the item
     }
   }
 
