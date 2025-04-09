@@ -1,0 +1,10 @@
+{
+    "canisters": {
+        "website": {
+            "type": "assets",
+            "source": [
+                "assets"
+            ]
+        }
+    }
+}
