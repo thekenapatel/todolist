@@ -28,21 +28,6 @@ A sleek and minimal ToDo List app built with **React** and **Vite**. Easily add,
 
 ---
 
-## 📦 Installation
-
-**1. Clone the repo** <br/>
-   git clone https://github.com/thekenapatel/todolist.git <br/>
-   cd todolist
-
-**2. Install dependencies** <br/>
-     npm install
-
-
-**2. Run the development server** <br/>
-     npm run dev
-
----
-
 ## 📸 Screenshot
 
 ![todolist - page](https://github.com/user-attachments/assets/fd53eff3-0525-452c-899c-c2488dca912f)
